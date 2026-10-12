@@ -1,0 +1,7 @@
+{
+  "name": "project-files-panel",
+  "version": "1.0.0",
+  "description": "Panel lateral para revisar los nombres de archivos dentro del proyecto sin abrirlos.",
+  "type": "module",
+  "license": "MIT"
+}

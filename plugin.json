@@ -1,0 +1,11 @@
+{
+  "name": "project-files",
+  "displayName": "Visor de Archivos del Proyecto",
+  "description": "Panel lateral para revisar y explorar los nombres de archivos dentro del proyecto sin abrirlos.",
+  "version": "1.0.0",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Lista los archivos del proyecto",
+    "¿Qué estructura de carpetas tiene este proyecto?"
+  ]
+}

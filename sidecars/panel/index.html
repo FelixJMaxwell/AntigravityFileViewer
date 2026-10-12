@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Explorador de Archivos</title>
+  <link rel="stylesheet" href="/styles.css">
+  <!-- Bridge to Antigravity: aplica el tema del IDE y expone window.sidecar -->
+  <script src="/preload.js"></script>
+</head>
+<body>
+  <div class="explorer-window">
+    <!-- Barra superior de navegación estilo Explorador de Windows -->
+    <header class="explorer-nav-bar">
+      <div class="nav-buttons">
+        <button id="btnBack" class="nav-btn" type="button" title="Atrás" disabled>
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path d="M11 2L5 8l6 6V2z"/>
+          </svg>
+        </button>
+        <button id="btnUp" class="nav-btn" type="button" title="Subir a la carpeta superior" disabled>
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path d="M8 3L3 8h3v5h4V8h3L8 3z"/>
+          </svg>
+        </button>
+        <button id="btnRefresh" class="nav-btn" type="button" title="Actualizar">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path d="M13.6 2.4A7.9 7.9 0 0 0 8 0C3.6 0 0 3.6 0 8s3.6 8 8 8c3.7 0 6.8-2.6 7.7-6h-2.1A5.9 5.9 0 0 1 8 14 6 6 0 1 1 8 2c1.7 0 3.2.7 4.2 1.8L9 7h7V0l-2.4 2.4z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Barra de dirección / ruta -->
+      <div class="address-bar-container">
+        <span class="folder-indicator">📁</span>
+        <input type="text" id="addressInput" class="address-input" spellcheck="false" placeholder="Ruta de carpeta...">
+        <button id="btnGo" class="go-btn" type="button" title="Ir a la ruta">➔</button>
+      </div>
+
+      <!-- Caja de búsqueda -->
+      <div class="search-box-container">
+        <input type="search" id="searchInput" class="search-input" placeholder="🔍 Buscar...">
+      </div>
+    </header>
+
+    <!-- Encabezado de columnas estilo detalles de Windows -->
+    <div class="column-header">
+      <div class="col col-name" id="sortName" title="Ordenar por Nombre">
+        <span>Nombre</span>
+        <span class="sort-indicator" id="sortNameIcon">▲</span>
+      </div>
+      <div class="col col-date" id="sortDate" title="Ordenar por Fecha">
+        <span>Fecha</span>
+        <span class="sort-indicator" id="sortDateIcon"></span>
+      </div>
+      <div class="col col-type" id="sortType" title="Ordenar por Tipo">
+        <span>Tipo</span>
+        <span class="sort-indicator" id="sortTypeIcon"></span>
+      </div>
+      <div class="col col-size" id="sortSize" title="Ordenar por Tamaño">
+        <span>Tamaño</span>
+        <span class="sort-indicator" id="sortSizeIcon"></span>
+      </div>
+    </div>
+
+    <!-- Área principal con la lista de elementos -->
+    <main class="file-view" id="fileView" tabindex="0">
+      <div id="loadingIndicator" class="view-state" hidden>
+        <div class="win-spinner"></div>
+        <span>Cargando carpeta...</span>
+      </div>
+
+      <div id="emptyMessage" class="view-state" hidden>
+        <span class="empty-icon">📁</span>
+        <span id="emptyText">Esta carpeta está vacía.</span>
+      </div>
+
+      <ul id="itemList" class="item-list"></ul>
+    </main>
+
+    <!-- Barra de estado inferior estilo Windows -->
+    <footer class="status-bar">
+      <div class="status-left">
+        <span id="statusCount">0 elementos</span>
+      </div>
+      <div class="status-separator"></div>
+      <div class="status-right">
+        <span id="statusSelected">Ningún elemento seleccionado</span>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast" hidden></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

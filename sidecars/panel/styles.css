@@ -1,0 +1,366 @@
+/* Estilo inspirado en el Explorador de Windows, adaptado al tema de Antigravity */
+:root {
+  --nav-height: 38px;
+  --header-height: 28px;
+  --footer-height: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--background, #191919);
+  color: var(--foreground, #dfdfdf);
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  font-size: 12px;
+  line-height: 1.3;
+  user-select: none;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.explorer-window {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background: var(--background, #1e1e1e);
+}
+
+/* 1. Barra de navegación y dirección */
+.explorer-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: var(--card, rgba(255, 255, 255, 0.03));
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 2px;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--foreground, #cccccc);
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: var(--card-border, rgba(255, 255, 255, 0.08));
+  border-color: var(--border, rgba(255, 255, 255, 0.15));
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.address-bar-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: var(--background, rgba(0, 0, 0, 0.25));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  border-radius: 4px;
+  height: 26px;
+  padding: 0 4px 0 8px;
+  overflow: hidden;
+}
+
+.folder-indicator {
+  font-size: 13px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.address-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--foreground, #ffffff);
+  font-family: inherit;
+  font-size: 11.5px;
+  padding: 0;
+  user-select: text;
+}
+
+.go-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted-foreground, #888888);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 2px 4px;
+}
+
+.go-btn:hover {
+  color: var(--foreground, #ffffff);
+}
+
+.search-box-container {
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 100%;
+  height: 26px;
+  background: var(--background, rgba(0, 0, 0, 0.25));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  border-radius: 4px;
+  color: var(--foreground, #ffffff);
+  font-family: inherit;
+  font-size: 11.5px;
+  padding: 0 6px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: var(--primary, #3b82f6);
+}
+
+/* 2. Encabezado de columnas estilo Detalles de Windows */
+.column-header {
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+  background: var(--card, rgba(255, 255, 255, 0.02));
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted-foreground, #999999);
+  padding: 0 4px;
+}
+
+.col {
+  padding: 4px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.col:hover {
+  background: var(--card-border, rgba(255, 255, 255, 0.05));
+  color: var(--foreground, #ffffff);
+}
+
+.sort-indicator {
+  font-size: 9px;
+  color: var(--primary, #3b82f6);
+}
+
+/* Distribución de columnas */
+.col-name {
+  flex: 1;
+  min-width: 130px;
+}
+
+.col-date {
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.col-type {
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.col-size {
+  width: 65px;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* 3. Área de lista de elementos */
+.file-view {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--background, #1a1a1a);
+  outline: none;
+  padding: 2px 4px;
+}
+
+.item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  border-radius: 3px;
+  cursor: default;
+  font-size: 11.5px;
+  transition: background 0.05s;
+  padding: 0;
+}
+
+.file-row:hover:not(.selected) {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.file-row.selected {
+  background: rgba(59, 130, 246, 0.25);
+  border: 1px solid rgba(59, 130, 246, 0.45);
+  height: 24px;
+}
+
+.file-row .col {
+  cursor: default;
+}
+
+.file-row .col-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.item-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.item-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--foreground, #eeeeee);
+}
+
+.is-folder .item-title {
+  font-weight: 500;
+  color: var(--foreground, #ffffff);
+}
+
+.file-row .col-date,
+.file-row .col-type,
+.file-row .col-size {
+  color: var(--muted-foreground, #888888);
+  font-size: 11px;
+}
+
+/* 4. Barra de estado inferior */
+.status-bar {
+  display: flex;
+  align-items: center;
+  height: var(--footer-height);
+  background: var(--card, rgba(255, 255, 255, 0.03));
+  border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  padding: 0 10px;
+  font-size: 10.5px;
+  color: var(--muted-foreground, #888888);
+}
+
+.status-left {
+  flex-shrink: 0;
+}
+
+.status-separator {
+  width: 1px;
+  height: 12px;
+  background: var(--border, rgba(255, 255, 255, 0.15));
+  margin: 0 8px;
+}
+
+.status-right {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Estados vacíos y spinner */
+.view-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 10px;
+  color: var(--muted-foreground, #888888);
+  gap: 8px;
+}
+
+.empty-icon {
+  font-size: 26px;
+  opacity: 0.5;
+}
+
+.win-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--primary, #3b82f6);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive para paneles laterales estrechos */
+@media (max-width: 380px) {
+  .col-type {
+    display: none;
+  }
+  .search-box-container {
+    width: 80px;
+  }
+}
+
+@media (max-width: 300px) {
+  .col-date {
+    display: none;
+  }
+}
+
+/* Toast */
+.toast {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #f8fafc;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  z-index: 100;
+}
+
+.toast.error {
+  background: #7f1d1d;
+  color: #fecaca;
+  border-color: #b91c1c;
+}
